@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_downloader/views/download_screen.dart';
 import 'package:video_downloader/views/home_screen.dart';
+import 'package:video_downloader/views/platform_selector.dart';
 import 'package:video_downloader/views/request_screen.dart';
 
 class AppRoutes {
@@ -8,6 +9,7 @@ class AppRoutes {
   static const String homeScreen = '/homeScreen';
   static const String requestScreen = '/requestScreen';
   static const String downloadScreen = '/downloadScreen';
+  static const String selectionScreen = '/selectionScreen';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -20,6 +22,8 @@ class AppRoutes {
             builder: (_) => DownloadScreen(
                   type: settings.arguments.toString(),
                 ));
+      case selectionScreen:
+        return MaterialPageRoute(builder: (_) => const SelectionScreen());
 
       default:
         return _errorRoute();

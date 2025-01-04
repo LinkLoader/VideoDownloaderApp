@@ -95,9 +95,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           end: Alignment.bottomCenter,
                         ).createShader(bounds),
                         child: const Text(
-                          'InstaDownloader',
+                          'LinkLoader',
                           style: TextStyle(
-                            fontSize: 52,
+                            fontSize: 64,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                             letterSpacing: 2,
@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           ],
                         ),
                         child: const Text(
-                          'Welcome to InstaDownloader\nThe easiest way to download your favorite content!',
+                          'Welcome to LinkLoader\nThe easiest way to download your favorite content!',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 18,
@@ -168,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).pushNamed('/requestScreen');
+                            Navigator.of(context).pushNamed('/selectionScreen');
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: const Color(0xFFFF69B4),

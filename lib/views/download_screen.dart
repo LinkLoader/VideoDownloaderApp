@@ -136,245 +136,214 @@ class _DownloadScreenState extends State<DownloadScreen>
                       ),
                     ),
                     // Main content area
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SlideTransition(
-                                position: _slideAnimation,
-                                child: FadeTransition(
-                                  opacity: _fadeAnimation,
-                                  child: Container(
-                                    padding: const EdgeInsets.all(25),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: themeColor.withOpacity(0.1),
-                                          blurRadius: 20,
-                                          offset: const Offset(0, 10),
-                                          spreadRadius: 0,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // Icon and title
-                                        Row(
-                                          children: [
-                                            Container(
-                                              padding: const EdgeInsets.all(12),
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    themeColor.withOpacity(0.1),
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                              ),
-                                              child: Icon(
-                                                widget.type == 'Video'
-                                                    ? Icons.video_library
-                                                    : Icons.audiotrack,
-                                                color: themeColor,
-                                                size: 24,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 15),
-                                            Text(
-                                              'Enter URL',
-                                              style: TextStyle(
-                                                color: themeColor,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 25),
-                                        // URL Input field
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey[50],
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            border: Border.all(
-                                              color: Colors.grey[200]!,
-                                              width: 1,
-                                            ),
-                                          ),
-                                          child: TextField(
-                                            controller: _urlController,
-                                            decoration: InputDecoration(
-                                              hintText: hint,
-                                              hintStyle: TextStyle(
-                                                  color: Colors.grey[400]),
-                                              border: InputBorder.none,
-                                              contentPadding:
-                                                  const EdgeInsets.all(20),
-                                              prefixIcon: Icon(
-                                                Icons.link,
-                                                color: themeColor,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 25),
-                                        // Download button
-                                        Material(
-                                          color: Colors.transparent,
-                                          child: InkWell(
-                                            onTap: provider.isLoading
-                                                ? null
-                                                : () async {
-                                                    if (_urlController
-                                                        .text.isEmpty) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                          content: const Text(
-                                                              'Please enter a URL'),
-                                                          backgroundColor:
-                                                              Colors.red,
-                                                          behavior:
-                                                              SnackBarBehavior
-                                                                  .floating,
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                          ),
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(10),
-                                                        ),
-                                                      );
-                                                      return;
-                                                    }
-
-                                                    final success =
-                                                        await provider
-                                                            .downloadContent(
-                                                      widget.type,
-                                                      _urlController.text,
-                                                    );
-
-                                                    if (success && mounted) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                              '${widget.type} downloaded successfully!'),
-                                                          backgroundColor:
-                                                              themeColor,
-                                                          behavior:
-                                                              SnackBarBehavior
-                                                                  .floating,
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                          ),
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(10),
-                                                        ),
-                                                      );
-                                                    }
-                                                  },
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 60,
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    themeColor,
-                                                    themeColor.withOpacity(0.8)
-                                                  ],
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: themeColor
-                                                        .withOpacity(0.3),
-                                                    blurRadius: 10,
-                                                    offset: const Offset(0, 5),
-                                                  ),
-                                                ],
-                                              ),
-                                              child: Center(
-                                                child: provider.isLoading
-                                                    ? const SizedBox(
-                                                        height: 24,
-                                                        width: 24,
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          color: Colors.white,
-                                                          strokeWidth: 2,
-                                                        ),
-                                                      )
-                                                    : Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Icon(
-                                                            widget.type ==
-                                                                    'Video'
-                                                                ? Icons.download
-                                                                : Icons
-                                                                    .music_note,
-                                                            color: Colors.white,
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 10),
-                                                          Text(
-                                                            'Download ${widget.type}',
-                                                            style:
-                                                                const TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    mainContainer(themeColor, hint, provider, context),
                   ],
                 );
               },
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Expanded mainContainer(Color themeColor, String hint,
+      DownloadProvider provider, BuildContext context) {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SlideTransition(
+                position: _slideAnimation,
+                child: FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: Container(
+                    padding: const EdgeInsets.all(25),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: themeColor.withOpacity(0.1),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
+                          spreadRadius: 0,
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Icon and title
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: themeColor.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Icon(
+                                widget.type == 'Video'
+                                    ? Icons.video_library
+                                    : Icons.audiotrack,
+                                color: themeColor,
+                                size: 24,
+                              ),
+                            ),
+                            const SizedBox(width: 15),
+                            Text(
+                              'Enter URL',
+                              style: TextStyle(
+                                color: themeColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 25),
+                        // URL Input field
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[50],
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: Colors.grey[200]!,
+                              width: 1,
+                            ),
+                          ),
+                          child: TextField(
+                            controller: _urlController,
+                            decoration: InputDecoration(
+                              hintText: hint,
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              border: InputBorder.none,
+                              contentPadding: const EdgeInsets.all(20),
+                              prefixIcon: Icon(
+                                Icons.link,
+                                color: themeColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 25),
+                        // Download button
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: provider.isLoading
+                                ? null
+                                : () async {
+                                    if (_urlController.text.isEmpty) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content:
+                                              const Text('Please enter a URL'),
+                                          backgroundColor: Colors.red,
+                                          behavior: SnackBarBehavior.floating,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          margin: const EdgeInsets.all(10),
+                                        ),
+                                      );
+                                      return;
+                                    }
+
+                                    final success =
+                                        await provider.downloadContent(
+                                      widget.type,
+                                      _urlController.text,
+                                    );
+
+                                    if (success && mounted) {
+                                      _urlController.clear();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              '${widget.type} downloaded successfully!'),
+                                          backgroundColor: themeColor,
+                                          behavior: SnackBarBehavior.floating,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          margin: const EdgeInsets.all(10),
+                                        ),
+                                      );
+                                    }
+                                  },
+                            child: Container(
+                              width: double.infinity,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    themeColor,
+                                    themeColor.withOpacity(0.8)
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: themeColor.withOpacity(0.3),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 5),
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                child: provider.isLoading
+                                    ? const SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 2,
+                                        ),
+                                      )
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            widget.type == 'Video'
+                                                ? Icons.download
+                                                : Icons.music_note,
+                                            color: Colors.white,
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            'Download ${widget.type}',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
