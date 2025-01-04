@@ -3,7 +3,7 @@ import 'package:video_downloader/enums/platform.dart';
 import 'package:video_downloader/service/download_service.dart';
 
 class DownloadProvider extends ChangeNotifier {
-  SocialPlatform socialPlatform = SocialPlatform.instagram;
+  SocialPlatform socialPlatform = SocialPlatform.youtube;
 
   void setSocialPlatform(SocialPlatform platform) {
     socialPlatform = platform;

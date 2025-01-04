@@ -48,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
         children: [
@@ -94,14 +95,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                         ).createShader(bounds),
-                        child: const Text(
+                        child: Text(
                           'LinkLoader',
                           style: TextStyle(
-                            fontSize: 64,
+                            fontSize: size.width < 600 ? 46 : 64,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                             letterSpacing: 2,
-                            shadows: [
+                            shadows: const [
                               Shadow(
                                 blurRadius: 15,
                                 color: Colors.black38,

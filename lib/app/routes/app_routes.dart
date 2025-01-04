@@ -26,7 +26,7 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const SelectionScreen());
 
       default:
-        return _errorRoute();
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
     }
   }
 

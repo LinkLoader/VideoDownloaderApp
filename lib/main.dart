@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_downloader/app/routes/app_routes.dart';
 
-import 'package:video_downloader/views/home_screen.dart';
-import 'package:video_downloader/views/request_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'provider/download_provider.dart';
-import 'views/platform_selector.dart';
 
 void main() {
   runApp(
@@ -31,11 +28,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const RequestScreen(),
-      routes: {
-        AppRoutes.homeScreen: (_) => const HomeScreen(),
-        AppRoutes.selectionScreen: (_) => const SelectionScreen(),
-        AppRoutes.requestScreen: (_) => const RequestScreen(),
-      },
+      // routes: {
+      //   // AppRoutes.homeScreen: (_) => const HomeScreen(),
+      //   AppRoutes.selectionScreen: (_) => const SelectionScreen(),
+      //   AppRoutes.requestScreen: (_) => const RequestScreen(),
+      // },
       initialRoute: AppRoutes.homeScreen,
       onGenerateRoute: AppRoutes.generateRoute,
     );

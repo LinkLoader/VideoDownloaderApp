@@ -255,13 +255,11 @@ class _DownloadScreenState extends State<DownloadScreen>
                                       );
                                       return;
                                     }
-
                                     final success =
                                         await provider.downloadContent(
                                       widget.type,
                                       _urlController.text,
                                     );
-
                                     if (success && mounted) {
                                       _urlController.clear();
                                       ScaffoldMessenger.of(context)
