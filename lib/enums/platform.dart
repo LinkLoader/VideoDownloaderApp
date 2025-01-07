@@ -51,4 +51,15 @@ enum SocialPlatform {
         return "assets/lottie/twitter.json";
     }
   }
+
+  String get platFormPng {
+    switch (this) {
+      case SocialPlatform.instagram:
+        return "assets/images/insta.png";
+      case SocialPlatform.youtube:
+        return "assets/images/yt.png";
+      case SocialPlatform.twitter:
+        return "assets/images/twitter.png";
+    }
+  }
 }

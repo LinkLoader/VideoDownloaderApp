@@ -3,6 +3,7 @@ import 'package:video_downloader/views/download_screen.dart';
 import 'package:video_downloader/views/home_screen.dart';
 import 'package:video_downloader/views/platform_selector.dart';
 import 'package:video_downloader/views/request_screen.dart';
+import 'package:video_downloader/views/social_platform.dart';
 
 class AppRoutes {
   // Define all route names here
@@ -23,7 +24,8 @@ class AppRoutes {
                   type: settings.arguments.toString(),
                 ));
       case selectionScreen:
-        return MaterialPageRoute(builder: (_) => const SelectionScreen());
+        return MaterialPageRoute(
+            builder: (_) => const PlatformSelectionScreen());
 
       default:
         return MaterialPageRoute(builder: (_) => const HomeScreen());

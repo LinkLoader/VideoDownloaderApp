@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:math' as math;
+
+import 'package:video_downloader/enums/platform.dart';
+import 'package:video_downloader/provider/download_provider.dart';
+import 'package:video_downloader/widgets/platform_dropdown.dart';
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({super.key});
@@ -13,7 +18,7 @@ class _RequestScreenState extends State<RequestScreen>
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
-
+  SocialPlatform _selectedPlatform = SocialPlatform.instagram;
   @override
   void initState() {
     super.initState();
@@ -105,6 +110,7 @@ class _RequestScreenState extends State<RequestScreen>
                     ],
                   ),
                 ),
+
                 // Main content area
                 Expanded(
                   child: Center(
@@ -113,29 +119,112 @@ class _RequestScreenState extends State<RequestScreen>
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _buildAnimatedButton(
-                            context,
-                            'Download Video',
-                            'High quality video downloads',
-                            Icons.video_library,
-                            const Color(0xFF4A90E2),
-                            () => Navigator.of(context).pushNamed(
-                              '/downloadScreen',
-                              arguments: 'Video',
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 25),
+                            child: SlideTransition(
+                              position: _slideAnimation,
+                              child: FadeTransition(
+                                opacity: _fadeAnimation,
+                                child: PlatformDropdown(
+                                  selectedPlatform: _selectedPlatform,
+                                  onChanged: (platform) {
+                                    setState(() {
+                                      _selectedPlatform = platform;
+                                      if (platform == SocialPlatform.youtube) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: const Text(
+                                                'Coming Soon Stay Tuned'),
+                                            backgroundColor: Colors.blue,
+                                            behavior: SnackBarBehavior.floating,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            margin: const EdgeInsets.all(10),
+                                          ),
+                                        );
+                                      } else {
+                                        Provider.of<DownloadProvider>(context,
+                                                listen: false)
+                                            .setSocialPlatform(platform);
+                                        // Navigator.of(context).pushNamed(
+                                        //   '/requestScreen',
+                                        //   arguments: platform,
+                                        // );
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
                             ),
                           ),
+                          _buildAnimatedButton(
+                              context,
+                              'Download Video',
+                              'High quality video downloads',
+                              Icons.video_library,
+                              const Color(0xFF4A90E2), () {
+                            if (_selectedPlatform == SocialPlatform.youtube) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text('Coming Soon Stay Tuned'),
+                                  backgroundColor: Colors.blue,
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  margin: const EdgeInsets.all(10),
+                                ),
+                              );
+                            } else {
+                              Provider.of<DownloadProvider>(context,
+                                      listen: false)
+                                  .setSocialPlatform(_selectedPlatform);
+                              // Navigator.of(context).pushNamed(
+                              //   '/requestScreen',
+                              //   arguments: platform,
+                              // );
+                              Navigator.of(context).pushNamed(
+                                '/downloadScreen',
+                                arguments: 'Video',
+                              );
+                            }
+                          }),
                           const SizedBox(height: 30),
                           _buildAnimatedButton(
-                            context,
-                            'Download Audio',
-                            'Extract audio from videos',
-                            Icons.audiotrack,
-                            const Color(0xFF9B51E0),
-                            () => Navigator.of(context).pushNamed(
-                              '/downloadScreen',
-                              arguments: 'Audio',
-                            ),
-                          ),
+                              context,
+                              'Download Audio',
+                              'Extract audio from videos',
+                              Icons.audiotrack,
+                              const Color(0xFF9B51E0), () {
+                            if (_selectedPlatform == SocialPlatform.youtube) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text('Coming Soon Stay Tuned'),
+                                  backgroundColor: Colors.blue,
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  margin: const EdgeInsets.all(10),
+                                ),
+                              );
+                            } else {
+                              Provider.of<DownloadProvider>(context,
+                                      listen: false)
+                                  .setSocialPlatform(_selectedPlatform);
+                              // Navigator.of(context).pushNamed(
+                              //   '/requestScreen',
+                              //   arguments: platform,
+                              // );
+                              Navigator.of(context).pushNamed(
+                                '/downloadScreen',
+                                arguments: 'Audio',
+                              );
+                            }
+                          }),
                         ],
                       ),
                     ),
